@@ -9,7 +9,9 @@ Repo about how to use fitbit API.
 - Get access token.
 - Make HTTP requests to fitbit API endpoints with the access token.
 
-## What you need to register application in fitbit.
+## Enable fitbit API
+
+### What you need to register application in fitbit.
 
 - Application website URL
 - Organization website URL
@@ -17,11 +19,11 @@ Repo about how to use fitbit API.
 - Privacy policy URL
 - Redirect URL
 
-## Register application in fitbit
+### Register application in fitbit
 
 - https://dev.fitbit.com/apps/new
 
-## Get access token in tutorial
+### Get access token in tutorial
 
 - Go to the application you registered in `https://dev.fitbit.com/apps`.
 - At the bottom, click `OAuth 2.0 tutorial page`.
@@ -31,7 +33,7 @@ Repo about how to use fitbit API.
 - It redirects you to the redirect URL you used in registration
 - Get the access token from the redirected URL.
 
-## Test making HTTP requests to fitbit with the access token
+### Test making HTTP requests to fitbit with the access token
 
 - Go to `https://www.postman.com/`.
 - Make GET request with
@@ -42,3 +44,20 @@ Repo about how to use fitbit API.
 ## Python sample to make HTTP requests to fitbit API
 
 - [GET request to get the user profile data](https://github.com/yukikitayama/fitbit/blob/main/demo_make_request.py)
+
+## Sleep
+
+- You can get sleep summary data and the time series of sleep data with the level and its duration.
+- The minimum interval is 30 seconds.
+
+### Demo
+
+- [Make request to get sleep log](https://github.com/yukikitayama/fitbit/blob/main/get_sleep_log_by_date.py)
+- [Extract data from sleep log response JSON](https://github.com/yukikitayama/fitbit/blob/main/extract_data_from_sleep_log.py)
+
+![Sleep level time series](https://github.com/yukikitayama/fitbit/blob/main/image/sleep_level_time_series_2021-11-28.png)
+
+### API documentation
+
+https://dev.fitbit.com/build/reference/web-api/sleep/get-sleep-log-by-date/
+

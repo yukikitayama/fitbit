@@ -40,10 +40,8 @@ Repo about how to use fitbit API.
   - URL: `https://api.fitbit.com/1/user/-/profile.json`
   - Authorization type: `OAuth 2.0`, Add authorization data to `Request Headers`, paste the access token with the header
     prefix: `Bearer`.
-
-## Python sample to make HTTP requests to fitbit API
-
-- [GET request to get the user profile data](https://github.com/yukikitayama/fitbit/blob/main/demo_make_request.py)
+- Test with Python requests package
+  - [GET request to get the user profile data](https://github.com/yukikitayama/fitbit/blob/main/demo_make_request.py)
 
 ## Sleep
 

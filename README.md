@@ -2,6 +2,14 @@
 
 Repo about how to use fitbit API.
 
+## Reminder
+
+- Heart rate logging sometimes stops, so the data is gone. You can early notice it by finding heart rate is not logged 
+  during running or weightlifting. It needs manual fix.
+- If heart rate is not logged, **sleep is not logged**, while other GPS, calorie, and step calculations are working.
+- Following [the fitbit instructions](https://help.fitbit.com/articles/en_US/Help_article/1565.htm#ImpactsAccuracy) to 
+  reset heart rate recording and wear the device as fitbit instructs.
+
 ## Big picture to use fitbit API
 
 - Register application in fitbit developer website.

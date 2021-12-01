@@ -32,7 +32,11 @@ def main():
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
+    # params = {
+    #     'timezone': 'UTC'
+    # }
     response = requests.request('GET', url, headers=headers)
+    # response = requests.request('GET', url, headers=headers, params=params)
     print('Response headers')
     pprint.pprint(response.headers)
     print()

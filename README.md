@@ -68,7 +68,7 @@ Repo about how to use fitbit API.
 
 ### API documentation
 
-https://dev.fitbit.com/build/reference/web-api/sleep/get-sleep-log-by-date/
+- https://dev.fitbit.com/build/reference/web-api/sleep/get-sleep-log-by-date/
 
 ## Heart Rate
 
@@ -84,3 +84,8 @@ https://dev.fitbit.com/build/reference/web-api/sleep/get-sleep-log-by-date/
 - Extract intraday heart rate data and visualize it
 
 ![Intraday heart rate](https://github.com/yukikitayama/fitbit/blob/main/image/heart_rate_intraday_2021-11-27.png)
+
+### API documentation
+
+- https://dev.fitbit.com/build/reference/web-api/heartrate-timeseries/get-heartrate-timeseries-by-date/
+- https://dev.fitbit.com/build/reference/web-api/intraday/get-heartrate-intraday-by-date/

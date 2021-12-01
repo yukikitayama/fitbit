@@ -4,18 +4,21 @@ Repo about how to use fitbit API.
 
 ## Reminder
 
-- Heart rate logging sometimes stops, so the data is gone. You can early notice it by finding heart rate is not logged 
-  during running or weightlifting. It needs manual fix.
-- If heart rate is not logged, **sleep is not logged**, while other GPS, calorie, and step calculations are working.
-- Following [the fitbit instructions](https://help.fitbit.com/articles/en_US/Help_article/1565.htm#ImpactsAccuracy) to 
-  reset heart rate recording and wear the device as fitbit instructs.
+- Heart rate logging sometimes stops, and the data is gone. You can early notice it by finding heart rate is not logged 
+  during running or weightlifting. It needs manual fix. **If heart rate is not logged, sleep is not logged**, while 
+  other GPS, calorie, and step calculations are working.
+  - Follow [the fitbit instructions](https://help.fitbit.com/articles/en_US/Help_article/1565.htm#ImpactsAccuracy) to 
+    reset heart rate recording and wear the device as fitbit instructs.
+- Choose **Personal** for OAuth 2.0 Application Type in registering app, because it allows us to get the intraday data, 
+  which is a finer granularity of data such as heart rate time series in 1 second and 1 minute level.
+- Can query data both in UTC and local time, maybe important if you are in US.
 
 ## Big picture to use fitbit API
 
 - Register application in fitbit developer website.
 - A user allows the application to access their data.
 - Get access token.
-- Make HTTP requests to fitbit API endpoints with the access token.
+- Make HTTP requests to fitbit API endpoints with the access token to get data.
 
 ## Enable fitbit API
 
@@ -67,3 +70,17 @@ Repo about how to use fitbit API.
 
 https://dev.fitbit.com/build/reference/web-api/sleep/get-sleep-log-by-date/
 
+## Heart Rate
+
+- Intraday minutely data of heart rate beats per minute is available by choosing application type Personal when 
+  registering app.
+- There are two APIs; Heart Rate Time Series, and Heart Rate Intraday. But I think both APIs returns the same data. 
+  Heart Rate Time Series contains intraday granular data.
+
+### Demo
+
+- [Get Heart Rate Time Series and save it to JSON](https://github.com/yukikitayama/fitbit/blob/main/get_heart_rate_time_series_by_date.py)
+- [Get Heart Rate Intraday and save it to JSON](https://github.com/yukikitayama/fitbit/blob/main/get_heart_rate_intraday_by_date.py)
+- Extract intraday heart rate data and visualize it
+
+![Intraday heart rate](https://github.com/yukikitayama/fitbit/blob/main/image/heart_rate_intraday_2021-11-27.png)

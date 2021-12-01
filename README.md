@@ -81,7 +81,7 @@ Repo about how to use fitbit API.
 
 - [Get Heart Rate Time Series and save it to JSON](https://github.com/yukikitayama/fitbit/blob/main/get_heart_rate_time_series_by_date.py)
 - [Get Heart Rate Intraday and save it to JSON](https://github.com/yukikitayama/fitbit/blob/main/get_heart_rate_intraday_by_date.py)
-- Extract intraday heart rate data and visualize it
+- [Extract intraday heart rate data and visualize it](https://github.com/yukikitayama/fitbit/blob/main/visualize_intraday_heart_rate.py)
 
 ![Intraday heart rate](https://github.com/yukikitayama/fitbit/blob/main/image/heart_rate_intraday_2021-11-27.png)
 

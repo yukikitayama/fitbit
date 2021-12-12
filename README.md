@@ -54,6 +54,18 @@ Repo about how to use fitbit API.
 - Test with Python requests package
   - [GET request to get the user profile data](https://github.com/yukikitayama/fitbit/blob/main/demo_make_request.py)
 
+### Access Token
+
+- `expires_in` is in seconds the lifetime of the access token.
+- By default, it's 604,800 seconds, or 10,080 minutes, or 7 days, because `10,080 minutes / (60 minutes * 24 hours)`
+
+### Authorization Code Flow
+
+- OAuth 2.0 tutorial page generates the authorization URL for us, and click it.
+- It gives us a code in redirect URL, copy and paste it to the tutorial
+- It again generates a command for curl POST, and do it
+- Paste the response to the tutorial, and it gives us the example requests to fitbit API.
+
 ## Sleep
 
 - You can get sleep summary data and the time series of sleep data with the level and its duration.
@@ -89,3 +101,18 @@ Repo about how to use fitbit API.
 
 - https://dev.fitbit.com/build/reference/web-api/heartrate-timeseries/get-heartrate-timeseries-by-date/
 - https://dev.fitbit.com/build/reference/web-api/intraday/get-heartrate-intraday-by-date/
+
+## Activity
+
+- The following time series data is available.
+  - Steps taken per minute
+  - Calories burned per minute
+  - Distance moved per minute
+
+![Intraday steps](https://github.com/yukikitayama/fitbit/blob/main/image/steps_time_series_2021-12-04.png)
+
+![Intraday calories burned](https://github.com/yukikitayama/fitbit/blob/main/image/calories_time_series_2021-12-04.png)
+
+## Body
+
+- xxx

@@ -7,8 +7,8 @@ pd.set_option('expand_frame_repr', False)
 
 
 DATE = '2021-12-04'
-DATA = f'data/activity_time_series_steps_{DATE}.json'
-SAVEFIG = f'image/steps_time_series_{DATE}.png'
+DATA = f'data/activity_time_series_calories_{DATE}.json'
+SAVEFIG = f'image/calories_time_series_{DATE}.png'
 
 
 def main():
@@ -16,14 +16,14 @@ def main():
     # Read data
     with open(DATA, 'r') as f:
         data = json.load(f)
-    # pprint.pprint(data)
+    pprint.pprint(data)
 
     # Extract data
-    df = pd.DataFrame(data['activities-steps-intraday']['dataset'])
+    df = pd.DataFrame(data['activities-calories-intraday']['dataset'])
     df['index'] = pd.to_datetime(df['time'])
     df = df.set_index('index')
-    total_steps = df['value'].sum()
-    print(f'Total steps on {DATE}: {total_steps}')
+    total_calories = df['value'].sum()
+    print(f'Total calories burned on {DATE}: {total_calories}')
     print(df.shape)
     print(df.dtypes)
     print(df.head())
@@ -32,9 +32,9 @@ def main():
 
     # Visualize data
     plt.plot(df['value'])
-    plt.title(f'Intraday steps on {DATE} (Total steps: {total_steps})')
+    plt.title(f'Intraday calories burned on {DATE} (Total calories burned: {total_calories:.0f})')
     plt.xlabel('MT')
-    plt.ylabel('Steps')
+    plt.ylabel('Calories')
     plt.xticks(rotation=45)
     plt.grid()
     plt.tight_layout()

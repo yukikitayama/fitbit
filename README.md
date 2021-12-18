@@ -118,3 +118,7 @@ Repo about how to use fitbit API.
 ## Body
 
 - xxx
+
+## Paper
+
+- [Water, Hydration and Health](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2908954/)

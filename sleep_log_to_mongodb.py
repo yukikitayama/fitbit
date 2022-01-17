@@ -59,7 +59,7 @@ def main():
 
     # Date range
     dates = [d.strftime('%Y-%m-%d') for d in pd.date_range(start=START, end=END, freq='D')]
-    for date in dates[:1]:
+    for date in dates:
 
         print(f'Date: {date}')
 
@@ -75,7 +75,7 @@ def main():
         collection.insert_one(data)
 
         # Sleep
-        print(f'Sleeping {SLEEP} seconds')
+        print(f'  Sleeping {SLEEP} seconds')
         time.sleep(SLEEP)
 
 

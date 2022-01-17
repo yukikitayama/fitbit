@@ -40,9 +40,9 @@ def main():
     print()
 
     # Save data
-    with open(RESPONSE_JSON, 'w') as outfile:
-        json.dump(response.json(), outfile, indent=2)
-    print(f'Saved the data from fitbit API to {RESPONSE_JSON}')
+    # with open(RESPONSE_JSON, 'w') as outfile:
+    #     json.dump(response.json(), outfile, indent=2)
+    # print(f'Saved the data from fitbit API to {RESPONSE_JSON}')
 
 
 if __name__ == '__main__':

@@ -27,6 +27,43 @@ def update_secret(region_name: str, secret_name: str, secret_key_pair: str) -> d
     return response
 
 
+def refresh_access_token(
+        refresh_token: str,
+        authorization_basic: str
+) -> dict:
+    headers = {
+        'Authorization': f'Basic {authorization_basic}',
+        'Content-Type': 'application/x-www-form-urlencoded',
+    }
+    data = {
+        'grant_type': 'refresh_token',
+        'refresh_token': refresh_token
+    }
+    response = requests.post('https://api.fitbit.com/oauth2/token', headers=headers, data=data)
+    response_json = response.json()
+    return response_json
+
+
+def update_aws_secrets_manager(
+        new_access_token: str,
+        new_refresh_token: str,
+        encoded_id: str,
+        authorization_basic: str
+) -> dict:
+    secret_key_pair = f'{{' \
+                      f'"access-token": "{new_access_token}", ' \
+                      f'"refresh-token": "{new_refresh_token}", ' \
+                      f'"encoded-id": "{encoded_id}", ' \
+                      f'"authorization-basic": "{authorization_basic}"' \
+                      f'}}'
+    response = update_secret(
+        region_name=REGION_NAME,
+        secret_name=SECRET_NAME,
+        secret_key_pair=secret_key_pair
+    )
+    return response
+
+
 def main():
 
     # Get secret
@@ -41,36 +78,32 @@ def main():
         'Authorization': f'Bearer {access_token}'
     }
     response = requests.get(f'https://api.fitbit.com/1/user/{encoded_id}/profile.json', headers=headers)
+    print(f'Status code: {response.status_code}')
     pprint.pprint(response.json())
 
-    # Refresh token
-    headers = {
-        'Authorization': f'Basic {authorization_basic}',
-        'Content-Type': 'application/x-www-form-urlencoded',
-    }
-    data = {
-        'grant_type': 'refresh_token',
-        'refresh_token': refresh_token
-    }
-    response = requests.post('https://api.fitbit.com/oauth2/token', headers=headers, data=data)
-    response_json = response.json()
-    pprint.pprint(response_json)
+    # If access token is expired
+    if response.status_code == 401 and response.json()['errors'][0]['errorType'] == 'expired_token':
+        print('Access token expired')
 
-    # Update AWS Secrets Manger
-    new_access_token = response_json['access_token']
-    new_refresh_token = response_json['refresh_token']
-    secret_key_pair = f'{{' \
-                      f'"access-token": "{new_access_token}", ' \
-                      f'"refresh-token": "{new_refresh_token}", ' \
-                      f'"encoded-id": "{encoded_id}", ' \
-                      f'"authorization-basic": "{authorization_basic}"' \
-                      f'}}'
-    response = update_secret(
-        region_name=REGION_NAME,
-        secret_name=SECRET_NAME,
-        secret_key_pair=secret_key_pair
-    )
-    pprint.pprint(response)
+        # Refresh token
+        response_json = refresh_access_token(
+            authorization_basic=authorization_basic,
+            refresh_token=refresh_token
+        )
+        print(f'Refreshed access token')
+        pprint.pprint(response_json)
+
+        # Update AWS Secrets Manager
+        new_access_token = response_json['access_token']
+        new_refresh_token = response_json['refresh_token']
+        response = update_aws_secrets_manager(
+            new_access_token=new_access_token,
+            new_refresh_token=new_refresh_token,
+            encoded_id=encoded_id,
+            authorization_basic=authorization_basic
+        )
+        print('Updated AWS Secrets Manager')
+        pprint.pprint(response)
 
 
 if __name__ == '__main__':

@@ -5,15 +5,21 @@ Repo about how to use fitbit API.
 ## Reminder
 
 - Heart rate logging sometimes stops, and the data is gone. You can early notice it by finding heart rate is not logged 
-  during running or weightlifting. It needs manual fix. **If heart rate is not logged, sleep is not logged**, while 
+  wearing fitbit device, running or weightlifting. It needs manual fix. **If heart rate is not logged, sleep is not logged**, while 
   other GPS, calorie, and step calculations are working.
+  - Restart fitbit device.
   - Follow [the fitbit instructions](https://help.fitbit.com/articles/en_US/Help_article/1565.htm#ImpactsAccuracy) to 
     reset heart rate recording and wear the device as fitbit instructs.
+  - Heart rate logging sometimes stops when you take off fitbit device and wear again.
 - Firbit scale, Aria Air, needs to be placed on a hard floor to get the correct data. 
   - For example, if you place the scale on a carpet floor, it gives you a wrong number like a half of your weight.
 - Choose **Personal** for OAuth 2.0 Application Type in registering app, because it allows us to get the intraday data, 
   which is a finer granularity of data such as heart rate time series in 1 second and 1 minute level.
 - Can query data both in UTC and local time, maybe important if you are in US.
+- Water can be automatically logged if you use `Hidrate Spark` to log drinking water and connect fitbit from hidrate
+  spark app.
+  - When refill water, it needs to be placed on a flat place for a few seconds to make the bottle recognize the water
+    is refilled, otherwise water isn't logged correctly.
 
 ## Big picture to use fitbit API
 

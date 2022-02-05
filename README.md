@@ -11,7 +11,7 @@ Repo about how to use fitbit API.
   - Follow [the fitbit instructions](https://help.fitbit.com/articles/en_US/Help_article/1565.htm#ImpactsAccuracy) to 
     reset heart rate recording and wear the device as fitbit instructs.
   - Heart rate logging sometimes stops when you take off fitbit device and wear again.
-- Firbit scale, Aria Air, needs to be placed on a hard floor to get the correct data. 
+- Fitbit scale, Aria Air, needs to be placed on a hard floor to get the correct data. 
   - For example, if you place the scale on a carpet floor, it gives you a wrong number like a half of your weight.
 - Choose **Personal** for OAuth 2.0 Application Type in registering app, because it allows us to get the intraday data, 
   which is a finer granularity of data such as heart rate time series in 1 second and 1 minute level.
@@ -24,9 +24,35 @@ Repo about how to use fitbit API.
 ## Big picture to use fitbit API
 
 - Register application in fitbit developer website.
-- A user allows the application to access their data.
-- Get access token.
-- Make HTTP requests to fitbit API endpoints with the access token to get data.
+  - https://dev.fitbit.com/apps/new
+- Fitbit users allow an application to access their data.
+- The application gets access token.
+- The application makes HTTP requests to fitbit API endpoints with the access token to get data.
+- The application refreshes the access token when it's expired with a refresh token to keep using fitbit API.
+
+## OAuth 2
+
+- By default, access token expires in 28,800 seconds, or 8 hours.
+- Refresh token API endpoint
+  - [Refresh Token API](https://dev.fitbit.com/build/reference/web-api/authorization/refresh-token/)
+- To refresh the expired access token, it needs
+  - Client ID
+    - Supplied when registered your application in dev.fitbit.com
+  - Client secret
+    - Supplied when registered your application in dev.fitbit.com
+  - Refresh token
+    - Supplied when you obtained the access token for the first time, or when you refreshed an access token.
+  - Basic token
+    - Created from client ID and client secret
+    - [Authorization](https://dev.fitbit.com/build/reference/web-api/developer-guide/authorization/)
+
+```python
+import base64
+client_id = 'ABC123'
+client_secret = 'DEF456'
+basic_token = base64.b64encode(f'{client_id}:{client_secret}'.encode()).decode()
+# QUJDMTIzOkRFRjQ1Ng==
+```
 
 ## Enable fitbit API
 

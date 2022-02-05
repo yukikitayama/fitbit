@@ -1,5 +1,6 @@
 import requests
 import boto3
+import base64
 import json
 import pprint
 
@@ -29,10 +30,10 @@ def update_secret(region_name: str, secret_name: str, secret_key_pair: str) -> d
 
 def refresh_access_token(
         refresh_token: str,
-        authorization_basic: str
+        basic_token: str
 ) -> dict:
     headers = {
-        'Authorization': f'Basic {authorization_basic}',
+        'Authorization': f'Basic {basic_token}',
         'Content-Type': 'application/x-www-form-urlencoded',
     }
     data = {
@@ -48,13 +49,15 @@ def update_aws_secrets_manager(
         new_access_token: str,
         new_refresh_token: str,
         encoded_id: str,
-        authorization_basic: str
+        client_id: str,
+        client_secret: str
 ) -> dict:
     secret_key_pair = f'{{' \
                       f'"access-token": "{new_access_token}", ' \
                       f'"refresh-token": "{new_refresh_token}", ' \
                       f'"encoded-id": "{encoded_id}", ' \
-                      f'"authorization-basic": "{authorization_basic}"' \
+                      f'"client-id": "{client_id}", ' \
+                      f'"client-secret": "{client_secret}"' \
                       f'}}'
     response = update_secret(
         region_name=REGION_NAME,
@@ -71,7 +74,8 @@ def main():
     access_token = secret['access-token']
     encoded_id = secret['encoded-id']
     refresh_token = secret['refresh-token']
-    authorization_basic = secret['authorization-basic']
+    client_id = secret['client-id']
+    client_secret = secret['client-secret']
 
     # Try using current access token
     headers = {
@@ -84,11 +88,14 @@ def main():
     # If access token is expired
     if response.status_code == 401 and response.json()['errors'][0]['errorType'] == 'expired_token':
         print('Access token expired')
+        
+        # Create basic token
+        basic_token = base64.b64encode(f'{client_id}:{client_secret}'.encode()).decode()
 
         # Refresh token
         response_json = refresh_access_token(
-            authorization_basic=authorization_basic,
-            refresh_token=refresh_token
+            refresh_token=refresh_token,
+            basic_token=basic_token
         )
         print(f'Refreshed access token')
         pprint.pprint(response_json)
@@ -100,7 +107,8 @@ def main():
             new_access_token=new_access_token,
             new_refresh_token=new_refresh_token,
             encoded_id=encoded_id,
-            authorization_basic=authorization_basic
+            client_id=client_id,
+            client_secret=client_secret
         )
         print('Updated AWS Secrets Manager')
         pprint.pprint(response)
